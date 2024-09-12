@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Schedule</title>
+</head>
+
+<style>
+
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container {
+        width: 1200px;
+        height: 600px;
+    }
+
+    .schedule-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .day-column {
+        width: 14.25%;
+        height: 100%;
+        border: 1px solid rgb(145, 145, 145);
+        border-radius: 5px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .day-name {
+        width: 100%;
+        width: 100%;
+        height: 60px;
+        background-color: #86BF8F;
+        font-weight: bold;
+        font-family: 'Futura', sans-serif;
+        text-align: center;
+        font-size: 1.5em;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .lesson-container {
+        box-sizing: border-box;
+        width: 96%;
+        background-color: #8772AF;
+        border-radius: 5px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;     
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    .lesson-title {
+        font-weight: bold;
+        font-family: 'Futura', sans-serif;
+        color: #fff;
+    }
+
+    .lesson-time {
+        background-color: #DE9E36;
+        border-radius: 5px;
+        padding: 5px;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+        font-family: 'Futura', sans-serif;
+        font-size: 0.8em;
+    }
+
+    .lesson-level-age-container {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+    }
+
+
+    .lesson-level {
+        background-color: #272727;
+        border-radius: 5px;
+        padding: 5px;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+        color: #fff;
+        font-family: 'Futura', sans-serif;
+    }
+
+    .lesson-age {
+        background-color: #00A7E1;
+        border-radius: 5px;
+        padding: 5px;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+        color: #fff;
+        font-family: 'Futura', sans-serif;
+    }
+    
+</style>
+
+<body>
+
+    <div class="container">
+        <div class="schedule-container">
+            <div class="day-column" id="column-mon">
+                <div class="day-name">Mon</div>
+                <div class="lesson-container">
+                    <div class="lesson-title">Math & Logic</div>
+                    <div class="lesson-time">&#x1F550 10:00 - 12:00</div>
+                    <div class="lesson-level-age-container">
+                        <div class="lesson-level">Basic</div>
+                        <div class="lesson-age">S</div>
+                    </div>
+                </div>
+                <div class="lesson-container">
+                    <div class="lesson-title">Physics & Astronomy</div>
+                    <div class="lesson-time">&#x1F550 12:00 - 13:00</div>
+                    <div class="lesson-level-age-container">
+                        <div class="lesson-level">Pro</div>
+                        <div class="lesson-age">M</div>
+                    </div>
+                </div>
+            </div>
+            <div class="day-column" id="column-tue">
+                <div class="day-name">Tue</div>
+            </div>
+            <div class="day-column" id="column-wed">
+                <div class="day-name">Wed</div>
+            </div>
+            <div class="day-column" id="column-thu">
+                <div class="day-name">Thu</div>
+            </div>
+            <div class="day-column" id="column-fri">
+                <div class="day-name">Fri</div>
+            </div>
+            <div class="day-column" id="column-sat">
+                <div class="day-name">Sat</div>
+            </div>
+            <div class="day-column" id="column-sun">
+                <div class="day-name">Sun</div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+
+</body>
+</html>
