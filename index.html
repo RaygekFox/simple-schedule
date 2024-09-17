@@ -15,6 +15,10 @@
         justify-content: center;
     }
 
+    h1 {
+        font-family: Futura, sans-serif;
+    }
+
     .container {
         width: 1200px;
         height: 600px;
@@ -113,11 +117,13 @@
 
 <body>
 
+    <h1>Schedule Maker</h1>
+
     <div class="container">
         <div class="schedule-container">
             <div class="day-column" id="column-mon">
                 <div class="day-name">Mon</div>
-                <div class="lesson-container">
+                <!-- <div class="lesson-container">
                     <div class="lesson-title">Math & Logic</div>
                     <div class="lesson-time">&#x1F550 10:00 - 12:00</div>
                     <div class="lesson-level-age-container">
@@ -131,8 +137,8 @@
                     <div class="lesson-level-age-container">
                         <div class="lesson-level">Pro</div>
                         <div class="lesson-age">M</div>
-                    </div>
-                </div>
+                    </div> 
+                </div> -->
             </div>
             <div class="day-column" id="column-tue">
                 <div class="day-name">Tue</div>
@@ -154,10 +160,59 @@
             </div>
         </div>
     </div>
-    
 
+    <script>
+        let lessons = [
+            {
+                Title: "Example Title",
+                day: "Mon",
+                time: "10:00-12:00",
+                black_label: "Basic",
+                blue_label: "S"
+            },
+            {
+                Title: "Another Title",
+                day: "Mon",
+                time: "12:00-13:00",
+                black_label: "Pro",
+                blue_label: "M"
+            }
+        ];
 
+        window.onload = function() {
+            const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+            for (const day of days) {
+                const column = document.getElementById(`column-${day.toLowerCase()}`);
+                if (!column) {
+                    console.error(`Column not found for day: ${day}`);
+                    continue;
+                }
+
+                // Keep the day name, remove other children
+                while (column.children.length > 1) {
+                    column.removeChild(column.lastChild);
+                }
+
+                for (const lesson of lessons) {
+                    if (lesson.day === day) {
+                        const lessonContainer = document.createElement("div");
+                        lessonContainer.classList.add("lesson-container");
+                        lessonContainer.innerHTML = `
+                            <div class="lesson-title">${lesson.Title}</div>
+                            <div class="lesson-time">&#x1F550 ${lesson.time}</div>
+                            <div class="lesson-level-age-container">
+                                <div class="lesson-level">${lesson.black_label}</div>
+                                <div class="lesson-age">${lesson.blue_label}</div>
+                            </div>
+                        `;
+                        column.appendChild(lessonContainer);
+                    }
+                }
+            }
+        }
+    </script>
 
 </body>
+
 </html>
