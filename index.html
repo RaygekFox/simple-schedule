@@ -13,6 +13,8 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        gap: 20px;
+        position: relative;
     }
 
     h1 {
@@ -113,14 +115,45 @@
         font-family: 'Futura', sans-serif;
     }
     
-    #share-button {
+    .button {
         margin-top: 20px;
-        padding: 10px 20px;
+        height: 40px; /* Set a fixed height */
+        padding: 0 20px; /* Adjust horizontal padding */
         font-family: 'Futura', sans-serif;
+        font-size: 1.2em;
         background-color: #86BF8F;
         border: none;
-        border-radius: 5px;
+        border-radius: 20px; /* Half of the height */
         cursor: pointer;
+        display: flex; /* Add this */
+        align-items: center; /* Add this */
+        justify-content: center; /* Add this */
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        border: 5px solid #8772AF;
+    }
+
+    .form-container input {
+        width: 100%;
+        height: 40px;
+        border: 1px solid #8772AF;
+        border-radius: 20px;
+        padding: 0 20px;
+        font-family: 'Futura', sans-serif;
     }
 </style>
 
@@ -128,26 +161,12 @@
 
     <h1>Schedule Maker</h1>
 
+    <button class="button" id="add-event">&#x2795; Add event</button>
+
     <div class="container">
         <div class="schedule-container">
             <div class="day-column" id="column-mon">
                 <div class="day-name">Mon</div>
-                <!-- <div class="lesson-container">
-                    <div class="lesson-title">Math & Logic</div>
-                    <div class="lesson-time">&#x1F550 10:00 - 12:00</div>
-                    <div class="lesson-level-age-container">
-                        <div class="lesson-level">Basic</div>
-                        <div class="lesson-age">S</div>
-                    </div>
-                </div>
-                <div class="lesson-container">
-                    <div class="lesson-title">Physics & Astronomy</div>
-                    <div class="lesson-time">&#x1F550 12:00 - 13:00</div>
-                    <div class="lesson-level-age-container">
-                        <div class="lesson-level">Pro</div>
-                        <div class="lesson-age">M</div>
-                    </div> 
-                </div> -->
             </div>
             <div class="day-column" id="column-tue">
                 <div class="day-name">Tue</div>
@@ -170,7 +189,7 @@
         </div>
     </div>
 
-    <button id="share-button">Generate Shareable Link</button>
+    <button class="button" id="share-button">&#x1F517; Share schedule</button>
 
     <script>
         let lessons = [
@@ -178,8 +197,8 @@
                 Title: "Example Title",
                 day: "Mon",
                 time: "10:00-12:00",
-                black_label: "Basic",
-                blue_label: "S",
+                black_label: "Label 1",
+                blue_label: "Tag 1",
                 link: "https://example.com",
                 color: "#8772AF"
             },
@@ -187,8 +206,8 @@
                 Title: "Another Title",
                 day: "Mon",
                 time: "12:00-13:00",
-                black_label: "Pro",
-                blue_label: "M",
+                black_label: "Label 2",
+                blue_label: "Tag 2",
                 link: "https://example.com",
                 color: "#8772AF"
             }
@@ -226,6 +245,59 @@
                 }
             }
         }
+
+
+        document.getElementById('add-event').addEventListener('click', function() {
+            const formContainer = document.createElement('div');
+            formContainer.classList.add('form-container');
+            formContainer.innerHTML = `
+                <select id="day-select">
+                    <option value="Mon">Monday</option>
+                    <option value="Tue">Tuesday</option>
+                    <option value="Wed">Wednesday</option>
+                    <option value="Thu">Thursday</option>
+                    <option value="Fri">Friday</option>
+                    <option value="Sat">Saturday</option>
+                    <option value="Sun">Sunday</option>
+                </select>
+                <input type="text" placeholder="Title" id="title-input">
+                <input type="text" placeholder="Time" id="time-input">
+                <input type="text" placeholder="Black Label" id="black-label-input">
+                <input type="text" placeholder="Blue Label" id="blue-label-input">
+                <input type="text" placeholder="Link" id="link-input">
+                <input type="color" id="color-input" value="#8772AF">
+                <label for="color-input">Choose event color</label>
+                <button class="button" id="add-event-confirm">&#x2795; Add event</button>
+            `;
+
+            document.body.appendChild(formContainer);
+
+            document.getElementById('add-event-confirm').addEventListener('click', function() {
+                const title = document.getElementById('title-input').value;
+                const day = document.getElementById('day-select').value;
+                const time = document.getElementById('time-input').value;
+                const blackLabel = document.getElementById('black-label-input').value;
+                const blueLabel = document.getElementById('blue-label-input').value;
+                const link = document.getElementById('link-input').value;
+                const color = document.getElementById('color-input').value;
+                lessons.push({
+                    Title: title,
+                    day: day,
+                    time: time,
+                    black_label: blackLabel,
+                    blue_label: blueLabel,
+                    link: link,
+                    color: color
+                });
+
+                // Update the schedule
+                updateSchedule();
+            
+            });
+        })
+
+            
+
 
         document.getElementById('share-button').addEventListener('click', function() {
             const encodedLessons = encodeURIComponent(JSON.stringify(lessons));
