@@ -139,6 +139,7 @@
     </div>
 
     <script>
+        // Function to get URL parameters
         function getUrlParameter(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
             var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -146,11 +147,13 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
+        // Get lessons from URL parameters
         let lessons = JSON.parse(decodeURIComponent(getUrlParameter('data')));
 
         window.onload = function() {
             const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+            // Create columns for each day
             for (const day of days) {
                 const column = document.getElementById(`column-${day.toLowerCase()}`);
                 if (!column) {
@@ -163,17 +166,20 @@
                     column.removeChild(column.lastChild);
                 }
 
+                // Create lessons for the current day
                 for (const lesson of lessons) {
                     if (lesson.day === day) {
                         const lessonContainer = document.createElement("div");
                         lessonContainer.classList.add("lesson-container");
                         lessonContainer.innerHTML = `
-                            <div class="lesson-title">${lesson.Title}</div>
-                            <div class="lesson-time">&#x1F550 ${lesson.time}</div>
-                            <div class="lesson-level-age-container">
-                                <div class="lesson-level">${lesson.black_label}</div>
-                                <div class="lesson-age">${lesson.blue_label}</div>
-                            </div>
+                            <a href="${lesson.link}">
+                                <div class="lesson-title">${lesson.Title}</div>
+                                <div class="lesson-time">&#x1F550 ${lesson.time}</div>
+                                <div class="lesson-level-age-container">
+                                    <div class="lesson-level">${lesson.black_label}</div>
+                                    <div class="lesson-age">${lesson.blue_label}</div>
+                                </div>
+                            </a>
                         `;
                         column.appendChild(lessonContainer);
                     }
