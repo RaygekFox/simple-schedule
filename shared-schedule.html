@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Schedule</title>
-</head>
-
-<style>
-
+    <title>Shared Schedule</title>
+    <style>
     body {
         display: flex;
         flex-direction: column;
@@ -112,42 +109,13 @@
         color: #fff;
         font-family: 'Futura', sans-serif;
     }
-    
-    #share-button {
-        margin-top: 20px;
-        padding: 10px 20px;
-        font-family: 'Futura', sans-serif;
-        background-color: #86BF8F;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-</style>
-
+    </style>
+</head>
 <body>
-
-    <h1>Schedule Maker</h1>
-
     <div class="container">
         <div class="schedule-container">
             <div class="day-column" id="column-mon">
                 <div class="day-name">Mon</div>
-                <!-- <div class="lesson-container">
-                    <div class="lesson-title">Math & Logic</div>
-                    <div class="lesson-time">&#x1F550 10:00 - 12:00</div>
-                    <div class="lesson-level-age-container">
-                        <div class="lesson-level">Basic</div>
-                        <div class="lesson-age">S</div>
-                    </div>
-                </div>
-                <div class="lesson-container">
-                    <div class="lesson-title">Physics & Astronomy</div>
-                    <div class="lesson-time">&#x1F550 12:00 - 13:00</div>
-                    <div class="lesson-level-age-container">
-                        <div class="lesson-level">Pro</div>
-                        <div class="lesson-age">M</div>
-                    </div> 
-                </div> -->
             </div>
             <div class="day-column" id="column-tue">
                 <div class="day-name">Tue</div>
@@ -170,25 +138,15 @@
         </div>
     </div>
 
-    <button id="share-button">Generate Shareable Link</button>
-
     <script>
-        let lessons = [
-            {
-                Title: "Example Title",
-                day: "Mon",
-                time: "10:00-12:00",
-                black_label: "Basic",
-                blue_label: "S"
-            },
-            {
-                Title: "Another Title",
-                day: "Mon",
-                time: "12:00-13:00",
-                black_label: "Pro",
-                blue_label: "M"
-            }
-        ];
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        let lessons = JSON.parse(decodeURIComponent(getUrlParameter('data')));
 
         window.onload = function() {
             const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -222,23 +180,6 @@
                 }
             }
         }
-
-        document.getElementById('share-button').addEventListener('click', function() {
-            const encodedLessons = encodeURIComponent(JSON.stringify(lessons));
-            const shareableUrl = `${window.location.origin}/shared-schedule.html?data=${encodedLessons}`;
-            
-            // Create a temporary input to copy the URL
-            const tempInput = document.createElement('input');
-            tempInput.value = shareableUrl;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-
-            alert('Shareable link copied to clipboard!');
-        });
     </script>
-
 </body>
-
 </html>
