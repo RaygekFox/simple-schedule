@@ -172,9 +172,13 @@
                         const lessonContainer = document.createElement("div");
                         lessonContainer.classList.add("lesson-container");
                         lessonContainer.onclick = function() {
+                            if (lesson.link) {
                             window.location.href = lesson.link;
                         };
-                        lessonContainer.style.cursor = 'pointer';
+                        lessonContainer.style.backgroundColor = lesson.color;
+                        if (lesson.link) {
+                            lessonContainer.style.cursor = 'pointer';
+                        }
                         lessonContainer.innerHTML = `
                             <div class="lesson-title">${lesson.Title}</div>
                             <div class="lesson-time">&#x1F550 ${lesson.time}</div>
@@ -184,6 +188,7 @@
                             </div>
                         `;
                         column.appendChild(lessonContainer);
+                        }
                     }
                 }
             }
