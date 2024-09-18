@@ -131,6 +131,10 @@
         box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
     }
 
+    .red {
+        background-color: #f37878;
+    }
+
     .form-container {
         display: flex;
         flex-direction: column;
@@ -141,10 +145,32 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        padding: 20px;
+        padding: 50px;
         background-color: #fff;
         border-radius: 10px;
         border: 5px solid #8772AF;
+    }
+
+    
+    .form-container select {
+        width: 100%;
+        height: 40px;
+        border: 1px solid #8772AF;
+        border-radius: 20px;
+        padding: 0 20px;
+        font-family: 'Futura', sans-serif;
+        background-color: #fff;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%238772AF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+        background-repeat: no-repeat;
+        background-position: right 15px top 50%;
+        background-size: 12px auto;
+    }
+
+    .form-container select::-ms-expand {
+        display: none;
     }
 
     .form-container input {
@@ -213,9 +239,16 @@
             }
         ];
 
+
         window.onload = function() {
+            updateSchedule();
+        }
+
+        // Update schedule
+        function updateSchedule() {
             const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+            // Going through columns for each day
             for (const day of days) {
                 const column = document.getElementById(`column-${day.toLowerCase()}`);
                 if (!column) {
@@ -232,6 +265,7 @@
                     if (lesson.day === day) {
                         const lessonContainer = document.createElement("div");
                         lessonContainer.classList.add("lesson-container");
+                        lessonContainer.style.backgroundColor = lesson.color;
                         lessonContainer.innerHTML = `
                             <div class="lesson-title">${lesson.Title}</div>
                             <div class="lesson-time">&#x1F550 ${lesson.time}</div>
@@ -241,12 +275,44 @@
                             </div>
                         `;
                         column.appendChild(lessonContainer);
+
+                        lessonContainer.addEventListener('click', function() {
+                            const deleteContainer = document.createElement('div');
+                            deleteContainer.classList.add('form-container');
+                            deleteContainer.innerHTML = `
+                                <button class="button red" id="delete-event">Delete</button>
+                                <button class="button" id="keep-event">Keep</button>
+                            `;
+                            document.body.appendChild(deleteContainer);
+                            
+                            document.getElementById('delete-event').addEventListener('click', function() {
+                                document.body.removeChild(deleteContainer);
+                                // Remove the lesson from the lessons array
+                                for (let i = 0; i < lessons.length; i++) {
+                                    if (lessons[i].Title === lesson.Title) {
+                                        lessons.splice(i, 1);
+                                        break;
+                                    }
+                                }
+                                updateSchedule();
+                            });
+
+                            document.getElementById('keep-event').addEventListener('click', function() {
+                                document.body.removeChild(deleteContainer);
+                            });
+
+                            document.getElementById('keep-event').addEventListener('click', function() {
+                                document.body.removeChild(deleteContainer);
+                            });
+                        });
                     }
                 }
             }
         }
 
 
+        // Add event button
+        //creating a form
         document.getElementById('add-event').addEventListener('click', function() {
             const formContainer = document.createElement('div');
             formContainer.classList.add('form-container');
@@ -261,17 +327,18 @@
                     <option value="Sun">Sunday</option>
                 </select>
                 <input type="text" placeholder="Title" id="title-input">
-                <input type="text" placeholder="Time" id="time-input">
+                <input type="text" placeholder="Time(e.g. 10:00-12:00)" id="time-input">
                 <input type="text" placeholder="Black Label" id="black-label-input">
                 <input type="text" placeholder="Blue Label" id="blue-label-input">
-                <input type="text" placeholder="Link" id="link-input">
+                <input type="text" placeholder="Link(optional)" id="link-input">
                 <input type="color" id="color-input" value="#8772AF">
-                <label for="color-input">Choose event color</label>
                 <button class="button" id="add-event-confirm">&#x2795; Add event</button>
+                <button class="button red" id="cancel-event">&#x2796; Cancel</button>
             `;
 
             document.body.appendChild(formContainer);
-
+            
+            //adding a new event from data from the form
             document.getElementById('add-event-confirm').addEventListener('click', function() {
                 const title = document.getElementById('title-input').value;
                 const day = document.getElementById('day-select').value;
@@ -290,9 +357,17 @@
                     color: color
                 });
 
+                //closing the form
+                document.body.removeChild(formContainer);
+
                 // Update the schedule
                 updateSchedule();
             
+            });
+
+            //closing the form
+            document.getElementById('cancel-event').addEventListener('click', function() {
+                document.body.removeChild(formContainer);
             });
         })
 
