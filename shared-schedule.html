@@ -148,7 +148,19 @@
         }
 
         // Get lessons from URL parameters
-        let lessons = JSON.parse(decodeURIComponent(getUrlParameter('data')));
+        let lessons = [];
+        try {
+            const dataParam = getUrlParameter('data');
+            console.log("Raw data parameter:", dataParam);
+            if (dataParam) {
+                lessons = JSON.parse(decodeURIComponent(dataParam));
+                console.log("Parsed lessons:", lessons);
+            } else {
+                console.error("No 'data' parameter found in URL");
+            }
+        } catch (error) {
+            console.error("Error parsing lessons data:", error);
+        }
 
         window.onload = function() {
             const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -173,7 +185,8 @@
                         lessonContainer.classList.add("lesson-container");
                         lessonContainer.onclick = function() {
                             if (lesson.link) {
-                            window.location.href = lesson.link;
+                                window.location.href = lesson.link;
+                            };
                         };
                         lessonContainer.style.backgroundColor = lesson.color;
                         if (lesson.link) {
@@ -188,7 +201,6 @@
                             </div>
                         `;
                         column.appendChild(lessonContainer);
-                        }
                     }
                 }
             }
