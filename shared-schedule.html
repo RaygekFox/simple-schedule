@@ -200,7 +200,7 @@
                         lessonContainer.classList.add("lesson-container");
                         lessonContainer.onclick = function() {
                             if (lesson.link) {
-                                window.location.href = lesson.link;
+                                window.open(lesson.link, '_blank');
                             };
                         };
                         lessonContainer.style.backgroundColor = lesson.color;
