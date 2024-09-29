@@ -30,7 +30,7 @@
 
     .day-column {
         width: 14.25%;
-        height: 100%;
+        height: auto; /* Change from 100% to auto */
         border: 1px solid rgb(145, 145, 145);
         border-radius: 5px;
         overflow: hidden;
@@ -109,31 +109,52 @@
         color: #fff;
         font-family: 'Futura', sans-serif;
     }
+
+    /* Add this new style */
+    .day-column-wrapper {
+        flex: 1 0 auto;
+        display: flex;
+        flex-direction: column;
+    }
     </style>
 </head>
 <body>
     <!-- <div class="container"> -->
     <div class="schedule-container">
-        <div class="day-column" id="column-mon">
-            <div class="day-name">Mon</div>
+        <div class="day-column-wrapper">
+            <div class="day-column" id="column-mon">
+                <div class="day-name">Mon</div>
+            </div>
         </div>
-        <div class="day-column" id="column-tue">
-            <div class="day-name">Tue</div>
+        <div class="day-column-wrapper">
+            <div class="day-column" id="column-tue">
+                <div class="day-name">Tue</div>
+            </div>
         </div>
-        <div class="day-column" id="column-wed">
-            <div class="day-name">Wed</div>
+        <div class="day-column-wrapper">
+            <div class="day-column" id="column-wed">
+                <div class="day-name">Wed</div>
+            </div>
         </div>
-        <div class="day-column" id="column-thu">
-            <div class="day-name">Thu</div>
+        <div class="day-column-wrapper">
+            <div class="day-column" id="column-thu">
+                <div class="day-name">Thu</div>
+            </div>
         </div>
-        <div class="day-column" id="column-fri">
-            <div class="day-name">Fri</div>
+        <div class="day-column-wrapper">
+            <div class="day-column" id="column-fri">
+                <div class="day-name">Fri</div>
+            </div>
         </div>
-        <div class="day-column" id="column-sat">
-            <div class="day-name">Sat</div>
+        <div class="day-column-wrapper">
+            <div class="day-column" id="column-sat">
+                <div class="day-name">Sat</div>
+            </div>
         </div>
-        <div class="day-column" id="column-sun">
-            <div class="day-name">Sun</div>
+        <div class="day-column-wrapper">
+            <div class="day-column" id="column-sun">
+                <div class="day-name">Sun</div>
+            </div>
         </div>
     </div>
     <!-- </div> -->
