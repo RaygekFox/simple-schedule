@@ -39,6 +39,7 @@
         flex-direction: column;
         gap: 10px;
         align-items: center;
+        padding-bottom: 10px;
     }
 
     .day-name {
@@ -111,6 +112,17 @@
         font-family: 'Futura', sans-serif;
     }
 
+    /* Add this media query for mobile devices */
+    @media screen and (max-width: 768px) {
+        .schedule-container {
+            flex-direction: column;
+        }
+
+        .day-column {
+            width: 100%;
+            margin-bottom: 20px; /* Add some space between columns */
+        }
+    }
 
     </style>
 </head>
